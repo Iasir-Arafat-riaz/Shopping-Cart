@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="minusButton" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="inputButton" type="text" class="form-control text-center" value="1">
+                           <button id="plusButton" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5 id="totalPrice">$1219</h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="decrease" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="caseInput" type="text" class="form-control text-center" value="1">
+                           <button id="increase" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5 id="totalAmount">$59</h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5 id="subtotal">$1,278</h5>
+                        <h5 id="tax">$63.9</h5>
+                        <h5 id="subtotalAll">$1,278</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+      document.getElementById("plusButton").addEventListener("click", function () {
+
+         handleProductChange(true);
+      })
+
+      document.getElementById("minusButton").addEventListener("click", function () {
+
+         handleProductChange(false);
+
+      })
+      function handleProductChange(isIncrease) {
+         var Input = document.getElementById("inputButton").value;
+         var roundInput = parseInt(Input);
+         var finalInput = roundInput;
+         if (isIncrease == false && roundInput > 0) {
+            finalInput = roundInput - 1;
+         }
+         else if (isIncrease == true) {
+            finalInput = roundInput + 1
+         }
+         document.getElementById("inputButton").value = finalInput;
+
+         var totalAmount = finalInput * 1219;
+         document.getElementById("totalPrice").innerText = "$" + totalAmount
+         calculate()
+
+      }
+
+      document.getElementById("increase").addEventListener("click", function () {
+         //   var caseInput = document.getElementById("caseInput").value;
+         //   var caseInputRound = parseInt(caseInput);
+         //   var caseAmount =caseInputRound+1
+
+         //   document.getElementById("caseInput").value=caseAmount;
+         //   var totalAmount= caseAmount * 59;
+         //   document.getElementById("totalAmount").innerText="$"+totalAmount
+
+         calculation(true);
+      })
+
+      document.getElementById("decrease").addEventListener("click", function () {
+         calculation(false);
+      })
+
+      function calculation(plusMinus) {
+         var caseInput = document.getElementById("caseInput").value;
+         var caseInputRound = parseInt(caseInput);
+         var caseAmount = caseInputRound
+         if (plusMinus == true) {
+            caseAmount = caseInputRound + 1
+         }
+         else if (plusMinus == false && caseInputRound > 0) {
+            caseAmount = caseInputRound - 1
+         }
+
+         document.getElementById("caseInput").value = caseAmount;
+         var totalAmount = caseAmount * 59;
+         document.getElementById("totalAmount").innerText = "$" + totalAmount
+         calculate()
+      }
+      function calculate() {
+         const phoneTotal = document.getElementById("inputButton");
+         const phoneTotalRound = parseInt(phoneTotal.value);
+
+         const caseTotal = document.getElementById("caseInput");
+         const caseTotalRound = parseInt(caseTotal.value);
+
+         var totalPrice = phoneTotalRound * 1219 + caseTotalRound * 59;
+         document.getElementById("subtotal").innerText = totalPrice
+
+         const tax = totalPrice / 20;
+         document.getElementById("tax").innerText = tax;
+
+         const subtotal = tax + totalPrice;
+         document.getElementById("subtotalAll").innerText = subtotal;
+
+      }
+
+      // function calculate(){
+      //    const phoneTotal= document.getElementById("totalPrice");
+      //    const phoneTotalRound = parseInt(phoneTotal.innerText);
+      //    // document.getElementById("totalPrice").innerText=phoneTotalRound;
+
+      //    const caseTotal = document.getElementById("totalAmount");
+      //    const caseTotalRound = parseInt(caseTotal.innerText);
+      //    // document.getElementById("totalAmount").innerText = caseTotalRound
+
+      //    var phoneAndCaseAmount = phoneTotalRound+caseTotalRound;
+      //    document.getElementById("subtotal").innerText="$"+phoneAndCaseAmount
+
+      // }
+
+   
+   
+   </script>
+</body>
+
+</html>
